@@ -147,7 +147,7 @@ VerifyBtn.MouseButton1Click:Connect(function()
         ScreenGui:Destroy()
         
         -- EXECUTA O SEU SCRIPT
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/KaiserRJ-GODHUB/GODHUB/refs/heads/main/GODHUB"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/KaiserRJ-GODHUB/GODHUB/refs/heads/main/GODHUB%20V1"))()
     else
         Status.Text = "Invalid Key! Try again."
         Status.TextColor3 = Color3.fromRGB(231, 76, 60)
