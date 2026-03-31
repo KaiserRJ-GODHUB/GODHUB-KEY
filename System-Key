@@ -1,0 +1,156 @@
+--[[ 
+   GOD HUB - KEY SYSTEM V1
+   English Version
+]]
+
+local Player = game.Players.LocalPlayer
+local CoreGui = game:GetService("CoreGui")
+local UserInputService = game:GetService("UserInputService")
+local HttpService = game:GetService("HttpService")
+
+-- Limpeza
+if CoreGui:FindFirstChild("GodHub_KeySystem") then
+    CoreGui.GodHub_KeySystem:Destroy()
+end
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "GodHub_KeySystem"
+ScreenGui.Parent = CoreGui
+ScreenGui.ResetOnSpawn = false
+
+local Cores = {
+    Fundo = Color3.fromRGB(20, 20, 20),
+    Texto = Color3.fromRGB(255, 255, 255),
+    Destaque = Color3.fromRGB(255, 215, 0), -- Gold
+    GetKey = Color3.fromRGB(80, 80, 80),   -- Grey
+    Verify = Color3.fromRGB(255, 140, 0),   -- Orange
+    Input = Color3.fromRGB(35, 35, 35)
+}
+
+local CorrectKey = "GODHUB_2408971454"
+local KeyLink = "https://link-hub.net/3805940/nJK0kV81523R"
+
+-- Função de Arrastar
+local function MakeDraggable(obj)
+    local dragging, dragStart, startPos
+    obj.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = obj.Position
+        end
+    end)
+    UserInputService.InputChanged:Connect(function(input)
+        if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+            local delta = input.Position - dragStart
+            obj.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        end
+    end)
+    UserInputService.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = false
+        end
+    end)
+end
+
+-- Painel Central
+local MainFrame = Instance.new("Frame", ScreenGui)
+MainFrame.Size = UDim2.new(0, 300, 0, 200)
+MainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
+MainFrame.BackgroundColor3 = Cores.Fundo
+MainFrame.Active = true
+Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 12)
+MakeDraggable(MainFrame)
+
+-- Título
+local Title = Instance.new("TextLabel", MainFrame)
+Title.Size = UDim2.new(1, 0, 0, 40)
+Title.Text = "GOD HUB AUTH"
+Title.TextColor3 = Cores.Destaque
+Title.Font = Enum.Font.SourceSansBold
+Title.TextSize = 22
+Title.BackgroundTransparency = 1
+
+-- Campo de Texto (Input)
+local KeyInput = Instance.new("TextBox", MainFrame)
+KeyInput.Size = UDim2.new(0, 260, 0, 40)
+KeyInput.Position = UDim2.new(0.5, -130, 0, 60)
+KeyInput.BackgroundColor3 = Cores.Input
+KeyInput.Text = ""
+KeyInput.PlaceholderText = "Enter Key Here..."
+KeyInput.TextColor3 = Cores.Texto
+KeyInput.PlaceholderColor3 = Color3.fromRGB(120, 120, 120)
+KeyInput.Font = Enum.Font.SourceSans
+KeyInput.TextSize = 16
+Instance.new("UICorner", KeyInput)
+
+-- Botão GET KEY (Grey)
+local GetKeyBtn = Instance.new("TextButton", MainFrame)
+GetKeyBtn.Size = UDim2.new(0, 125, 0, 40)
+GetKeyBtn.Position = UDim2.new(0, 20, 0, 120)
+GetKeyBtn.BackgroundColor3 = Cores.GetKey
+GetKeyBtn.Text = "GET KEY"
+GetKeyBtn.TextColor3 = Cores.Texto
+GetKeyBtn.Font = Enum.Font.SourceSansBold
+GetKeyBtn.TextSize = 18
+Instance.new("UICorner", GetKeyBtn)
+
+-- Botão VERIFY (Orange)
+local VerifyBtn = Instance.new("TextButton", MainFrame)
+VerifyBtn.Size = UDim2.new(0, 125, 0, 40)
+VerifyBtn.Position = UDim2.new(0, 155, 0, 120)
+VerifyBtn.BackgroundColor3 = Cores.Verify
+VerifyBtn.Text = "VERIFY"
+VerifyBtn.TextColor3 = Cores.Texto
+VerifyBtn.Font = Enum.Font.SourceSansBold
+VerifyBtn.TextSize = 18
+Instance.new("UICorner", VerifyBtn)
+
+-- Status Label
+local Status = Instance.new("TextLabel", MainFrame)
+Status.Size = UDim2.new(1, 0, 0, 30)
+Status.Position = UDim2.new(0, 0, 0, 165)
+Status.BackgroundTransparency = 1
+Status.Text = "Waiting for input..."
+Status.TextColor3 = Color3.fromRGB(150, 150, 150)
+Status.Font = Enum.Font.SourceSansItalic
+Status.TextSize = 14
+
+-- LÓGICA --
+
+-- Clicar em Get Key
+GetKeyBtn.MouseButton1Click:Connect(function()
+    setclipboard(KeyLink) -- Copia para o clipboard também
+    Status.Text = "Link copied to clipboard!"
+    Status.TextColor3 = Color3.fromRGB(200, 200, 200)
+    
+    -- Abre o navegador (funciona na maioria dos executores)
+    if select(2, pcall(function() return request end)) then
+        request({Url = KeyLink, Method = "GET"})
+    else
+        -- Fallback para executores que usam openviewport ou similar
+        local open = (syn and syn.request) or (http and http.request) or http_request
+        if open then
+            open({Url = KeyLink, Method = "GET"})
+        end
+    end
+end)
+
+-- Clicar em Verify
+VerifyBtn.MouseButton1Click:Connect(function()
+    if KeyInput.Text == CorrectKey then
+        Status.Text = "Access Granted! Loading..."
+        Status.TextColor3 = Color3.fromRGB(46, 204, 113)
+        wait(1.5)
+        
+        -- Fecha o Sistema de Key
+        ScreenGui:Destroy()
+        
+        -- EXECUTA O SEU SCRIPT
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/KaiserRJ-GODHUB/GODHUB/refs/heads/main/GODHUB"))()
+    else
+        Status.Text = "Invalid Key! Try again."
+        Status.TextColor3 = Color3.fromRGB(231, 76, 60)
+        KeyInput.Text = ""
+    end
+end)
