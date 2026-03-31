@@ -1,14 +1,13 @@
 --[[ 
-   GOD HUB - KEY SYSTEM V1
-   English Version
+   GOD HUB - KEY SYSTEM V1.1
+   Updated Loadstring: GODHUB V1
 ]]
 
 local Player = game.Players.LocalPlayer
 local CoreGui = game:GetService("CoreGui")
 local UserInputService = game:GetService("UserInputService")
-local HttpService = game:GetService("HttpService")
 
--- Limpeza
+-- Limpeza de UI antiga
 if CoreGui:FindFirstChild("GodHub_KeySystem") then
     CoreGui.GodHub_KeySystem:Destroy()
 end
@@ -120,37 +119,32 @@ Status.TextSize = 14
 
 -- Clicar em Get Key
 GetKeyBtn.MouseButton1Click:Connect(function()
-    setclipboard(KeyLink) -- Copia para o clipboard também
-    Status.Text = "Link copied to clipboard!"
+    setclipboard(KeyLink)
+    Status.Text = "Link copied! Open browser."
     Status.TextColor3 = Color3.fromRGB(200, 200, 200)
-    
-    -- Abre o navegador (funciona na maioria dos executores)
-    if select(2, pcall(function() return request end)) then
-        request({Url = KeyLink, Method = "GET"})
-    else
-        -- Fallback para executores que usam openviewport ou similar
-        local open = (syn and syn.request) or (http and http.request) or http_request
-        if open then
-            open({Url = KeyLink, Method = "GET"})
-        end
+    -- Tenta abrir automaticamente se o executor suportar
+    local req = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request)
+    if req then
+        req({Url = KeyLink, Method = "GET"})
     end
 end)
 
 -- Clicar em Verify
 VerifyBtn.MouseButton1Click:Connect(function()
     if KeyInput.Text == CorrectKey then
-        Status.Text = "Access Granted! Loading..."
+        Status.Text = "Success! Loading GOD HUB V1..."
         Status.TextColor3 = Color3.fromRGB(46, 204, 113)
         wait(1.5)
         
         -- Fecha o Sistema de Key
         ScreenGui:Destroy()
         
-        -- EXECUTA O SEU SCRIPT
+        -- EXECUTA O SCRIPT V1
         loadstring(game:HttpGet("https://raw.githubusercontent.com/KaiserRJ-GODHUB/GODHUB/refs/heads/main/GODHUB%20V1"))()
     else
-        Status.Text = "Invalid Key! Try again."
+        Status.Text = "Invalid Key!"
         Status.TextColor3 = Color3.fromRGB(231, 76, 60)
         KeyInput.Text = ""
     end
 end)
+
