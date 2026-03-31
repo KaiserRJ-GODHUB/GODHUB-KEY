@@ -1,6 +1,6 @@
 --[[ 
-   GOD HUB - KEY SYSTEM V1.1
-   Updated Loadstring: GODHUB V1
+   GOD HUB - KEY SYSTEM V1.2
+   Updated Loadstring: GODHUB V1.0
 ]]
 
 local Player = game.Players.LocalPlayer
@@ -122,7 +122,7 @@ GetKeyBtn.MouseButton1Click:Connect(function()
     setclipboard(KeyLink)
     Status.Text = "Link copied! Open browser."
     Status.TextColor3 = Color3.fromRGB(200, 200, 200)
-    -- Tenta abrir automaticamente se o executor suportar
+    
     local req = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request)
     if req then
         req({Url = KeyLink, Method = "GET"})
@@ -132,15 +132,15 @@ end)
 -- Clicar em Verify
 VerifyBtn.MouseButton1Click:Connect(function()
     if KeyInput.Text == CorrectKey then
-        Status.Text = "Success! Loading GOD HUB V1..."
+        Status.Text = "Success! Loading GOD HUB V1.0..."
         Status.TextColor3 = Color3.fromRGB(46, 204, 113)
-        wait(1.5)
+        task.wait(1.5)
         
         -- Fecha o Sistema de Key
         ScreenGui:Destroy()
         
-        -- EXECUTA O SCRIPT V1
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/KaiserRJ-GODHUB/GODHUB/refs/heads/main/GODHUB%20V1"))()
+        -- EXECUTA O SCRIPT V1.0
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/KaiserRJ-GODHUB/GODHUB/refs/heads/main/GODHUB%20V1.0"))()
     else
         Status.Text = "Invalid Key!"
         Status.TextColor3 = Color3.fromRGB(231, 76, 60)
