@@ -1,6 +1,6 @@
 --[[ 
-   GOD HUB - KEY SYSTEM V1.2
-   Updated Loadstring: GODHUB V1.0
+   GOD HUB - KEY SYSTEM V1.3
+   Updated Loadstring: GODHUB V1.1
 ]]
 
 local Player = game.Players.LocalPlayer
@@ -132,19 +132,18 @@ end)
 -- Clicar em Verify
 VerifyBtn.MouseButton1Click:Connect(function()
     if KeyInput.Text == CorrectKey then
-        Status.Text = "Success! Loading GOD HUB V1.0..."
+        Status.Text = "Success! Loading GOD HUB V1.1..."
         Status.TextColor3 = Color3.fromRGB(46, 204, 113)
         task.wait(1.5)
         
         -- Fecha o Sistema de Key
         ScreenGui:Destroy()
         
-        -- EXECUTA O SCRIPT V1.0
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/KaiserRJ-GODHUB/GODHUB/refs/heads/main/GODHUB%20V1.0"))()
+        -- EXECUTA O SCRIPT V1.1
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/KaiserRJ-GODHUB/GODHUB/refs/heads/main/GODHUB%20V1.1"))()
     else
         Status.Text = "Invalid Key!"
         Status.TextColor3 = Color3.fromRGB(231, 76, 60)
         KeyInput.Text = ""
     end
 end)
-
